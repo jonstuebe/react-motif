@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { colors, getColors } from "../theme";
+import { lighten, darken, transparentize } from "polished";
 
 const Checkbox = styled.input.attrs({
   type: "checkbox"
@@ -8,11 +10,11 @@ const Checkbox = styled.input.attrs({
   display: none;
 
   &:checked + .slider {
-    background-color: #3ECF8E;
+    background-color: ${colors.green};
   }
 
   &:focus + .slider {
-    box-shadow: 0 2px 3px 0 rgba(135,152,171,0.31);
+    box-shadow: 0 2px 3px 0 ${transparentize(0.31, colors.darkBlue)};
   }
 
   &:checked + .slider:before {
@@ -38,12 +40,12 @@ const Slider = styled.div.attrs({
   position: relative;
   float: left;
   cursor: pointer;
-  background-color: #8798AB;
+  background-color: ${colors.darkBlue};
   transition: all .4s ease-in-out;
   border-radius: 22px;
 
   &:hover {
-    box-shadow: 0 2px 3px 0 rgba(135,152,171,0.31);
+    box-shadow: 0 2px 3px 0 ${transparentize(0.31, colors.darkBlue)};
   }
 
   &:before {
@@ -61,13 +63,14 @@ const Slider = styled.div.attrs({
 
 const Label = styled.span`
   margin-left: 5px;
-  color: #A5B2C0;
+  color: ${lighten(0.1, colors.darkBlue)};
   font-size: 14px;
   float: left;
   font-family: 'Lato', sans-serif;
   height: 24px;
   line-height: 24px;
   -webkit-font-smoothing: antialiased;
+  user-select: none;
 `;
 
 export default class Switch extends Component {

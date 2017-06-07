@@ -2,18 +2,41 @@ import React from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { linkTo } from "@storybook/addon-links";
+// import { linkTo } from "@storybook/addon-links";
+
+import { ThemeProvider } from "../theme";
 
 import Button from "../components/Button";
 import Switch from "../components/Switch";
 import Checkbox from "../components/Checkbox";
+import AppBar from "../components/AppBar";
+
+import ProfilePhoto from "../components/ProfilePhoto";
+
+storiesOf("AppBar", module)
+  .add("default", () => <AppBar left={"atlas"} />)
+  .add("w/ right", () =>
+    <AppBar
+      left={"atlas"}
+      right={
+        <ProfilePhoto
+          image="https://scontent.fphx1-1.fna.fbcdn.net/v/t1.0-9/1920188_645159974999_342141418_n.jpg?oh=89e710f62ab59225d7b659e9a6a10166&oe=59A7C0DB"
+          style={{ marginTop: 5 }}
+        />
+      }
+    />
+  );
 
 storiesOf("Button", module)
-  .add("with text", () =>
-    <Button onClick={action("clicked")}>Hello Button</Button>
+  .add("default", () =>
+    <ThemeProvider>
+      <Button onClick={action("clicked")}>Hello Button</Button>
+    </ThemeProvider>
   )
-  .add("with some emoji", () =>
-    <Button onClick={action("clicked")}>😀 😎 👍 💯</Button>
+  .add("primary", () =>
+    <ThemeProvider>
+      <Button onClick={action("clicked")} primary>Hello Button</Button>
+    </ThemeProvider>
   );
 
 storiesOf("Switch", module)

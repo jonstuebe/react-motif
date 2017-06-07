@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { colors } from "../theme";
+import { lighten, darken } from "polished";
 
 const StyledCheckbox = styled.div`
   position: relative;
@@ -42,13 +44,14 @@ const Input = styled.input`
 
 const Label = styled.span`
   margin-left: 7px;
-  color: #A5B2C0;
+  color: ${lighten(0.1, colors.darkBlue)};
   font-size: 14px;
   float: left;
   font-family: 'Lato', sans-serif;
   height: 15px;
   line-height: 15px;
   -webkit-font-smoothing: antialiased;
+  user-select: none;
 `;
 
 const Container = styled.label`

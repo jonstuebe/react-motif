@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { colors } from "../theme";
-import { mix, darken, transparentize } from "polished";
-import classNames from "classnames";
+import { mix } from "polished";
 
 import Chevron from "../icons/Chevron";
 
@@ -65,109 +64,47 @@ const FolderIcon = styled.div`
   position: absolute;
   top: 50%;
   right: 10px;
-  transition: transform 250ms ease-in-out;
-  transform: translateY(-50%)${props => (props.active ? " rotate(90deg)" : "")};
 `;
 
-export class MenuItemChild extends Component {
-  static propTypes = {
-    index: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string,
-    parentActive: PropTypes.bool.isRequired
-  };
-  static contextTypes = {
-    menuActiveIndex: PropTypes.object,
-    setActiveMenuItem: PropTypes.func
-  };
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: props.active || false
-    };
-  }
-  onClick = event => {
-    if (this.props.onClick)
-      this.props.onClick({
-        title: this.props.title,
-        description: this.props.description,
-        index: this.props.index,
-        active: this.state.active
-      });
-    if (this.props.index !== this.context.menuActiveIndex.child) {
-      this.context.setActiveMenuItem(this.props.index, "child");
-    } else {
-      this.context.setActiveMenuItem(null, "child");
-    }
-    event.preventDefault();
-  };
-  isActive = () => {
-    return this.props.index === this.context.menuActiveIndex.child
-      ? true
-      : false;
-  };
-  render() {
-    const { title, description, parentActive } = this.props;
-    const active = this.isActive();
-    return (
-      <ChildItem
-        active={active}
-        onClick={this.onClick}
-        parentActive={parentActive}
-      >
-        <Title active={active}>{title}</Title>
-        <Description active={active}>
-          {description}
-        </Description>
-      </ChildItem>
-    );
-  }
-}
+// export class MenuItemChild extends Component {
+//   static propTypes = {
+//     active: PropTypes.bool,
+//     title: PropTypes.string.isRequired,
+//     description: PropTypes.string,
+//     parentActive: PropTypes.bool.isRequired
+//   };
+//   render() {
+//     const { title, description, parentActive, active } = this.props;
+//     return (
+//       <ChildItem active={active} onClick={this.onClick}>
+//         <Title active={active}>{title}</Title>
+//         <Description active={active}>
+//           {description}
+//         </Description>
+//       </ChildItem>
+//     );
+//   }
+// }
 
-export default class MenuItem extends Component {
+class MenuItem extends Component {
   static propTypes = {
-    index: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    active: PropTypes.bool
   };
   static defaultProps = {
     active: false
   };
   static contextTypes = {
-    menuActiveIndex: PropTypes.object,
-    setActiveMenuItem: PropTypes.func
+    setActiveGroup: PropTypes.func
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: props.active || false
-    };
-  }
   onClick = event => {
-    if (this.props.onClick)
-      this.props.onClick({
-        index: this.props.index,
-        title: this.props.title,
-        description: this.props.description,
-        active: this.state.active
-      });
-    if (this.props.index !== this.context.menuActiveIndex.parent) {
-      this.context.setActiveMenuItem(this.props.index);
-      this.context.setActiveMenuItem(null, "child");
-    } else {
-      this.context.setActiveMenuItem(null);
-    }
+    this.context.setActiveGroup(this.props);
     event.preventDefault();
   };
-  isActive = () => {
-    return this.props.index === this.context.menuActiveIndex.parent
-      ? true
-      : false;
-  };
-  renderItem() {
-    const { title, description, folder, children } = this.props;
-    const active = this.isActive();
+  render() {
+    const { title, description, children, active } = this.props;
     return (
       <Item
         active={active}
@@ -185,16 +122,6 @@ export default class MenuItem extends Component {
       </Item>
     );
   }
-  render() {
-    return this.props.children
-      ? <span>
-          {this.renderItem()}
-          {React.Children.map(this.props.children, child => {
-            return React.cloneElement(child, {
-              parentActive: this.isActive()
-            });
-          })}
-        </span>
-      : this.renderItem();
-  }
 }
+
+export default MenuItem;

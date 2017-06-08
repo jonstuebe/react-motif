@@ -31,6 +31,7 @@ const SvgWrapper = styled.div`
     return getSize(props).height;
   }};
   position: relative;
+  display: inline-block;
 
   svg {
     width: ${props => {

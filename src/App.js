@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AppLayout from "./components/AppLayout";
 import AppBar from "./components/AppBar";
 import Menu from "./components/Menu";
 import MenuItemLink from "./components/MenuItemLink";
 import MenuItem from "./components/MenuItem";
+
+import FillHeight from "./helpers/FillHeight";
 
 import PropertiesContainer from "./containers/PropertiesContainer";
 
@@ -15,7 +17,7 @@ class App extends Component {
       <Router>
         <AppLayout>
           {({ Container, Left, Center, Right }) =>
-            <div>
+            <FillHeight>
               <AppBar left="atlas" />
               <Container>
                 <Left>
@@ -26,30 +28,36 @@ class App extends Component {
                       to="/properties/dashboard"
                     />
                     <MenuItem
-                      title="Properties List"
+                      title="Investments"
                       description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
                     >
                       <MenuItemLink
-                        title="Properties List"
+                        title="List View"
                         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                        to="/properties/list"
+                        to="/investments/list"
                       />
                       <MenuItemLink
-                        title="Properties Test"
+                        title="Reports"
                         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                        to="/properties/test"
+                        to="/investments/reports"
                       />
                     </MenuItem>
                   </Menu>
                 </Left>
                 <Center>
-                  <Route
-                    path="/properties/:page"
-                    component={PropertiesContainer}
-                  />
+                  <Switch>
+                    <Route
+                      path="/investments/:page"
+                      component={PropertiesContainer}
+                    />
+                    <Route
+                      path="/properties/:page"
+                      component={PropertiesContainer}
+                    />
+                  </Switch>
                 </Center>
               </Container>
-            </div>}
+            </FillHeight>}
         </AppLayout>
       </Router>
     );

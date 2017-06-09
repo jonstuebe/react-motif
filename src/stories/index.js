@@ -4,6 +4,8 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 // import { linkTo } from "@storybook/addon-links";
 
+import { BrowserRouter as Router } from "react-router-dom";
+
 import { ThemeProvider } from "../theme";
 
 import Button from "../components/Button";
@@ -11,7 +13,13 @@ import Switch from "../components/Switch";
 import Checkbox from "../components/Checkbox";
 import AppBar from "../components/AppBar";
 import Menu from "../components/Menu";
-import MenuItem, { MenuItemChild } from "../components/MenuItem";
+import MenuItem from "../components/MenuItem";
+import MenuItemLink from "../components/MenuItemLink";
+import StatusTag from "../components/StatusTag";
+import DataList from "../components/DataList";
+import DataListRow from "../components/DataListRow";
+import DataListColumn from "../components/DataListColumn";
+import DataListCell from "../components/DataListCell";
 
 import Chevron from "../icons/Chevron";
 
@@ -39,29 +47,30 @@ storiesOf("MenuItem", module)
     />
   )
   .add("folder", () =>
-    <Menu>
-      <MenuItem
-        title="Investments"
-        description="Lists, reports, and information pertaining to disposition"
-        index={0}
-      >
-        <MenuItemChild
-          title="List"
-          description="List view of all current dispositions."
-          index={0}
-        />
-        <MenuItemChild
-          title="List"
-          description="List view of all current dispositions."
-          index={1}
-        />
-        <MenuItemChild
-          title="List"
-          description="List view of all current dispositions."
-          index={2}
-        />
-      </MenuItem>
-    </Menu>
+    <Router>
+      <Menu>
+        <MenuItem
+          title="Investments"
+          description="Lists, reports, and information pertaining to disposition"
+        >
+          <MenuItemLink
+            title="Dashboard"
+            description="Dashboard view of all current dispositions."
+            to="/investments/dashboard"
+          />
+          <MenuItemLink
+            title="List"
+            description="List view of all current dispositions."
+            to="/investments/list"
+          />
+          <MenuItemLink
+            title="List"
+            description="Reports view of all current dispositions."
+            to="/investments/reports"
+          />
+        </MenuItem>
+      </Menu>
+    </Router>
   )
   .add("folder (active)", () =>
     <MenuItem
@@ -71,42 +80,6 @@ storiesOf("MenuItem", module)
       active
     />
   );
-
-storiesOf("Menu", module).add("default", () =>
-  <Menu>
-    <MenuItem
-      title="Investments"
-      description="Lists, reports, and information pertaining to dispositions."
-      index={0}
-    />
-    <MenuItem
-      title="Investments"
-      description="Lists, reports, and information pertaining to dispositions."
-      index={1}
-    >
-      <MenuItemChild
-        title="List"
-        description="List view of all current dispositions."
-        index={0}
-      />
-      <MenuItemChild
-        title="List"
-        description="List view of all current dispositions."
-        index={1}
-      />
-      <MenuItemChild
-        title="List"
-        description="List view of all current dispositions."
-        index={2}
-      />
-    </MenuItem>
-    <MenuItem
-      title="Investments"
-      description="Lists, reports, and information pertaining to dispositions."
-      index={2}
-    />
-  </Menu>
-);
 
 storiesOf("Button", module)
   .add("default", () =>
@@ -137,6 +110,35 @@ storiesOf("Checkbox", module)
   .add("default on", () =>
     <Checkbox onChange={action("changed")} defaultValue={true} />
   );
+
+storiesOf("StatusTag", module).add("default", () =>
+  <StatusTag>Vacant Unrented Ready</StatusTag>
+);
+
+storiesOf("DataListRow", module).add("basic", () =>
+  <DataList>
+    <DataListRow>
+      <DataListColumn><Checkbox /></DataListColumn>
+      <DataListColumn>Property ID</DataListColumn>
+      <DataListColumn>Street Address</DataListColumn>
+      <DataListColumn>City</DataListColumn>
+      <DataListColumn>State</DataListColumn>
+      <DataListColumn>ZIP</DataListColumn>
+      <DataListColumn>Status</DataListColumn>
+      <DataListColumn>Rent</DataListColumn>
+    </DataListRow>
+    <DataListRow>
+      <DataListCell><Checkbox /></DataListCell>
+      <DataListCell>59878</DataListCell>
+      <DataListCell>2468 W Templeton Ave</DataListCell>
+      <DataListCell>Phoenix</DataListCell>
+      <DataListCell>AZ</DataListCell>
+      <DataListCell>85281</DataListCell>
+      <DataListCell><StatusTag>Vacant Unrented Ready</StatusTag></DataListCell>
+      <DataListCell>$1,350</DataListCell>
+    </DataListRow>
+  </DataList>
+);
 
 storiesOf("Icons", module)
   .add("chevron right small", () => <Chevron direction="right" />)

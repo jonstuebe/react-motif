@@ -52,12 +52,17 @@ class Menu extends Component {
       this.setState({ activeIndex: this.findActiveGroup(nextProps) });
     }
   }
+  normalizeChildren = children => {
+    if (!children.length) children = [children];
+    return children;
+  };
   findActiveGroup = (props = null) => {
     if (!props) props = this.props;
+    const children = this.normalizeChildren(props.children);
     let activeParentIndex = null;
-    each(props.children, (parentItem, index) => {
+    each(children, (parentItem, index) => {
       if (!parentItem.props.to) {
-        const isActive = this.isGroupActive(props.children[index], props);
+        const isActive = this.isGroupActive(children[index], props);
         if (isActive) {
           activeParentIndex = index;
         }
@@ -99,9 +104,10 @@ class Menu extends Component {
     event.preventDefault();
   };
   handleFolderClick = (index, event) => {
+    const children = this.normalizeChildren(this.props.children);
     this.setState({
-      children: this.props.children[index].props.children,
-      groupTitle: this.props.children[index].props.title,
+      children: children[index].props.children,
+      groupTitle: children[index].props.title,
       showChildren: true
     });
     event.preventDefault();

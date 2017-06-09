@@ -15,6 +15,11 @@ const defaultTheme = extend(colors, {
   secondary: colors.darkGreen
 });
 
+let fonts = {
+  fontFamily: `'Lato', sans-serif`,
+  fontSmoothing: "antialiased"
+};
+
 const ThemeProvider = ({ children }) =>
   <Provider theme={defaultTheme}>{children}</Provider>;
 
@@ -34,4 +39,4 @@ const getColors = (props = {}) => {
   return colors;
 };
 
-export { defaultTheme, withTheme, ThemeProvider, colors, getColors };
+export { defaultTheme, withTheme, ThemeProvider, colors, getColors, fonts };

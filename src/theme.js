@@ -10,7 +10,7 @@ const colors = {
   green: "#3ECF8E",
   lightGrey: "#ECF0F5"
 };
-const defaultTheme = _.extend(colors, {
+const defaultTheme = extend(colors, {
   primary: colors.blue,
   secondary: colors.darkGreen
 });

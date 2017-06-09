@@ -24,13 +24,13 @@ const Container = styled.div`
 
 class MenuGroupTitle extends Component {
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
+    onClick: PropTypes.func,
+    title: PropTypes.string
   };
   render() {
     return (
       <Container onClick={this.props.onClick}>
-        <Chevron direction="left" />
+        <Chevron direction="left" color={"#fff"} />
         <Title>{this.props.title}</Title>
       </Container>
     );

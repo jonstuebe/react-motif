@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../theme";
 import { mix } from "polished";
+import { colors } from "../theme";
 
 import Chevron from "../icons/Chevron";
 
@@ -22,11 +22,9 @@ const Description = styled.p`
   color: ${colors.darkBlue};
   -webkit-font-smoothing: antialiased;
   transition: all 275ms ease-in-out;
-
 `;
 
-const Item = styled.div`
-  list-style-type: none;
+const Item = styled.a`
   margin: 0;
   padding: 19px 16px;
   transition: all 175ms ease-in-out;
@@ -49,42 +47,14 @@ const Item = styled.div`
         : ""};
   }
 `;
-
-const ChildItem = styled(Item)`
-  display: ${props => (props.parentActive ? "block" : "none")};
-  background-color: ${props =>
-    props.active ? mix(0.92, colors.lightBlue, colors.darkBlue) : ""};
-
-  &:hover {
-    background-color: ${mix(0.92, colors.lightBlue, colors.darkBlue)};
-  }
-`;
+const ItemLink = Item.withComponent("span");
 
 const FolderIcon = styled.div`
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
   right: 10px;
 `;
-
-// export class MenuItemChild extends Component {
-//   static propTypes = {
-//     active: PropTypes.bool,
-//     title: PropTypes.string.isRequired,
-//     description: PropTypes.string,
-//     parentActive: PropTypes.bool.isRequired
-//   };
-//   render() {
-//     const { title, description, parentActive, active } = this.props;
-//     return (
-//       <ChildItem active={active} onClick={this.onClick}>
-//         <Title active={active}>{title}</Title>
-//         <Description active={active}>
-//           {description}
-//         </Description>
-//       </ChildItem>
-//     );
-//   }
-// }
 
 class MenuItem extends Component {
   static propTypes = {
@@ -96,30 +66,27 @@ class MenuItem extends Component {
   static defaultProps = {
     active: false
   };
-  static contextTypes = {
-    setActiveGroup: PropTypes.func
-  };
-  onClick = event => {
-    this.context.setActiveGroup(this.props);
-    event.preventDefault();
-  };
   render() {
-    const { title, description, children, active } = this.props;
+    const { title, description, children, active, to, onClick } = this.props;
+    const folder = children ? true : false;
+    let passedProps = { active };
+    let ItemComponent = ItemLink;
+    if (!to) {
+      passedProps.folder = folder;
+      passedProps.onClick = onClick;
+      ItemComponent = Item;
+    }
     return (
-      <Item
-        active={active}
-        folder={children ? true : false}
-        onClick={this.onClick}
-      >
-        <Title active={active} folder={children ? true : false}>{title}</Title>
-        <Description active={active} folder={children ? true : false}>
+      <ItemComponent {...passedProps}>
+        <Title active={active} folder={folder}>{title}</Title>
+        <Description active={active} folder={folder}>
           {description}
         </Description>
         {children &&
           <FolderIcon active={active}>
             <Chevron direction="right" />
           </FolderIcon>}
-      </Item>
+      </ItemComponent>
     );
   }
 }

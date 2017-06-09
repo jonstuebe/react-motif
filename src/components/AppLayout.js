@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.section`
-  display: 'flex';
+import FillHeight from "../helpers/FillHeight";
+
+const Container = styled.section.attrs({
+  className: "container"
+})`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
 `;
 
 const Left = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-basis: 390px;
+  width: 390px;
+  flex: 0;
 `;
 
 const Center = styled.div`
@@ -20,6 +25,6 @@ const Right = styled.div`
 `;
 
 export default ({ children }) =>
-  <div>
+  <FillHeight>
     {children({ Container, Left, Center, Right })}
-  </div>;
+  </FillHeight>;

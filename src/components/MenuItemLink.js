@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { omit } from "lodash";
 import { Link, withRouter, matchPath } from "react-router-dom";
 
 import MenuItem from "./MenuItem";
@@ -28,11 +29,10 @@ class MenuItemLink extends Component {
     return matchPath(props.to, { path: props.location.pathname });
   };
   render() {
-    const { to, title, description } = this.props;
     const { active } = this.state;
     return (
-      <StyledLink to={to}>
-        <MenuItem title={title} description={description} active={active} />
+      <StyledLink to={this.props.to}>
+        <MenuItem {...omit(this.props, ["active"])} active={active} />
       </StyledLink>
     );
   }

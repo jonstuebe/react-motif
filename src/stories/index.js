@@ -8,6 +8,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import { ThemeProvider } from "../theme";
 
+import "../index.css";
+
 import Button from "../components/Button";
 import Switch from "../components/Switch";
 import Checkbox from "../components/Checkbox";
@@ -27,26 +29,28 @@ import ProfilePhoto from "../components/ProfilePhoto";
 
 storiesOf("AppBar", module)
   .add("default", () => <AppBar left={"atlas"} />)
-  .add("w/ right", () =>
-    <AppBar
-      left={"atlas"}
-      right={
-        <ProfilePhoto
-          image="https://www.gravatar.com/avatar/ca43155a79bd234200f52ea50193c4b6?s=200"
-          style={{ marginTop: 5 }}
-        />
-      }
-    />
-  );
+  .add("w/ right", () => (
+    <StoryContainer>
+      <AppBar
+        left={"atlas"}
+        right={
+          <ProfilePhoto
+            image="https://www.gravatar.com/avatar/ca43155a79bd234200f52ea50193c4b6?s=200"
+            style={{ marginTop: 5 }}
+          />
+        }
+      />
+    </StoryContainer>
+  ));
 
 storiesOf("MenuItem", module)
-  .add("default", () =>
+  .add("default", () => (
     <MenuItem
       title="Investments"
       description="Lists, reports, and information pertaining to disposition"
     />
-  )
-  .add("folder", () =>
+  ))
+  .add("folder", () => (
     <Router>
       <Menu>
         <MenuItem
@@ -71,51 +75,51 @@ storiesOf("MenuItem", module)
         </MenuItem>
       </Menu>
     </Router>
-  )
-  .add("folder (active)", () =>
+  ))
+  .add("folder (active)", () => (
     <MenuItem
       title="Investments"
       description="Lists, reports, and information pertaining to disposition"
       folder
       active
     />
-  );
+  ));
 
 storiesOf("Button", module)
-  .add("default", () =>
+  .add("default", () => (
     <ThemeProvider>
       <Button onClick={action("clicked")}>Hello Button</Button>
     </ThemeProvider>
-  )
-  .add("primary", () =>
+  ))
+  .add("primary", () => (
     <ThemeProvider>
       <Button onClick={action("clicked")} primary>Hello Button</Button>
     </ThemeProvider>
-  );
+  ));
 
 storiesOf("Switch", module)
   .add("uncontrolled", () => <Switch onChange={action("changed")} />)
-  .add("uncontrolled w/ label", () =>
+  .add("uncontrolled w/ label", () => (
     <Switch onChange={action("changed")} label="Autosave" />
-  )
-  .add("default on", () =>
+  ))
+  .add("default on", () => (
     <Switch onChange={action("changed")} defaultValue={true} />
-  );
+  ));
 
 storiesOf("Checkbox", module)
   .add("uncontrolled", () => <Checkbox onChange={action("changed")} />)
-  .add("uncontrolled w/ label", () =>
+  .add("uncontrolled w/ label", () => (
     <Checkbox onChange={action("changed")} label="Select All" />
-  )
-  .add("default on", () =>
+  ))
+  .add("default on", () => (
     <Checkbox onChange={action("changed")} defaultValue={true} />
-  );
+  ));
 
-storiesOf("StatusTag", module).add("default", () =>
+storiesOf("StatusTag", module).add("default", () => (
   <StatusTag>Vacant Unrented Ready</StatusTag>
-);
+));
 
-storiesOf("DataListRow", module).add("basic", () =>
+storiesOf("DataListRow", module).add("basic", () => (
   <DataList>
     <DataListRow>
       <DataListColumn><Checkbox /></DataListColumn>
@@ -138,14 +142,14 @@ storiesOf("DataListRow", module).add("basic", () =>
       <DataListCell>$1,350</DataListCell>
     </DataListRow>
   </DataList>
-);
+));
 
 storiesOf("Icons", module)
   .add("chevron right small", () => <Chevron direction="right" />)
   .add("chevron left small", () => <Chevron direction="left" />)
-  .add("chevron right medium", () =>
+  .add("chevron right medium", () => (
     <Chevron direction="right" size="medium" />
-  )
+  ))
   .add("chevron left medium", () => <Chevron direction="left" size="medium" />)
   .add("chevron right large", () => <Chevron direction="right" size="large" />)
   .add("chevron left large", () => <Chevron direction="left" size="large" />);

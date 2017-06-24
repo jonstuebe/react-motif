@@ -11,8 +11,7 @@ import { ThemeProvider } from "../theme";
 
 import "../index.css";
 
-import "react-virtualized/styles.css";
-import { Column, Table } from "react-virtualized";
+import faker from "faker";
 
 import Button from "../components/Button";
 import Switch from "../components/Switch";
@@ -26,12 +25,7 @@ import MenuItemLink from "../components/MenuItemLink";
 
 import Tag from "../components/Tag";
 
-// import LineChart from "../components/charts/LineChart";
-
-import DataList from "../components/DataList";
-import DataListRow from "../components/DataListRow";
-import DataListColumn from "../components/DataListColumn";
-import DataListCell from "../components/DataListCell";
+import { Table, Column, Cell } from "../components/Table";
 
 import Chevron from "../icons/Chevron";
 
@@ -127,77 +121,42 @@ storiesOf("Checkbox", module)
 
 storiesOf("Tag", module).add("default", () => <Tag>Vacant Unrented Ready</Tag>);
 
-// storiesOf("LineChart", module).add("basic", () => <LineChart />);
-
-import faker from "faker";
-storiesOf("ReactVirtualizedTable", module).add("Table/Column", () => {
+storiesOf("Table", module).add("basic", () => {
   let list = [];
-  for (var i = 0; i < 10000; i++) {
+  const statuses = [
+    "Vacant Unrented Not Ready",
+    "Notice Unrented Not Ready",
+    "Notice Unrented Ready"
+  ];
+  for (var i = 0; i < 15; i++) {
     list.push({
       propertyId: faker.random.number(),
       streetAddress: faker.address.streetAddress(),
       city: faker.address.city(),
       state: faker.address.stateAbbr(),
-      zip: faker.address.zipCode()
+      zip: faker.address.zipCode(),
+      status: statuses[Math.floor(Math.random() * statuses.length)]
     });
   }
 
   return (
-    <Table
-      width={800}
-      height={600}
-      headerHeight={20}
-      rowHeight={30}
-      rowCount={list.length}
-      rowGetter={({ index }) => list[index]}
-    >
-      <Column label="Property ID" dataKey="propertyId" width={150} />
-      <Column label="Street Address" dataKey="streetAddress" width={200} />
-      <Column label="City" dataKey="city" width={150} />
-      <Column label="State" dataKey="state" width={70} />
-      <Column label="ZIP" dataKey="zip" width={50} />
+    <Table data={list} striped hover>
+      <Column dataKey="propertyId" width={115}>Property ID</Column>
+      <Column dataKey="streetAddress" width={225}>Street Address</Column>
+      <Column dataKey="city" width={135}>City</Column>
+      <Column dataKey="state" width={55}>State</Column>
+      <Column dataKey="zip" width={100}>Zip</Column>
+      <Column
+        dataKey="status"
+        width={225}
+        cellRenderer={({ label, value }) =>
+          <Cell>
+            <span className="mobile-label">{label}</span><Tag>{value}</Tag>
+          </Cell>}
+      >
+        Status
+      </Column>
     </Table>
-  );
-});
-
-storiesOf("DataListRow", module).add("basic", () => {
-  let rows = [];
-  for (var i = 0; i < 100; i++) {
-    rows.push(
-      <DataListRow>
-        <DataListCell><Checkbox /></DataListCell>
-        <DataListCell>{faker.random.number()}</DataListCell>
-        <DataListCell>{faker.address.streetAddress()}</DataListCell>
-        <DataListCell>{faker.address.city()}</DataListCell>
-        <DataListCell>{faker.address.stateAbbr()}</DataListCell>
-        <DataListCell>{faker.address.zipCode()}</DataListCell>
-        <DataListCell><Tag>Vacant Unrented Ready</Tag></DataListCell>
-        <DataListCell>$1,350</DataListCell>
-      </DataListRow>
-    );
-  }
-
-  return (
-    <DataList height={600} striped hover fixed>
-      {({ Table, Thead, Tbody }) =>
-        <Table>
-          <Thead>
-            <DataListRow>
-              <DataListColumn><Checkbox /></DataListColumn>
-              <DataListColumn>Property ID</DataListColumn>
-              <DataListColumn>Street Address</DataListColumn>
-              <DataListColumn>City</DataListColumn>
-              <DataListColumn>State</DataListColumn>
-              <DataListColumn>ZIP</DataListColumn>
-              <DataListColumn>Status</DataListColumn>
-              <DataListColumn>Rent</DataListColumn>
-            </DataListRow>
-          </Thead>
-          <Tbody>
-            {rows}
-          </Tbody>
-        </Table>}
-    </DataList>
   );
 });
 

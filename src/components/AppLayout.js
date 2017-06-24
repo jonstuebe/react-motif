@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import FillHeight from "../helpers/FillHeight";
-
 const Container = styled.section.attrs({
   className: "container"
 })`
-  height: 100%;
+  height: calc(100vh - 43px);
+  overflow: hidden;
   display: flex;
   flex-direction: row;
 `;
@@ -18,6 +17,7 @@ const Left = styled.div`
 
 const Center = styled.div`
   flex: 1;
+  overflow: auto;
 `;
 
 const Right = styled.div`
@@ -25,6 +25,6 @@ const Right = styled.div`
 `;
 
 export default ({ children }) =>
-  <FillHeight>
+  <div>
     {children({ Container, Left, Center, Right })}
-  </FillHeight>;
+  </div>;

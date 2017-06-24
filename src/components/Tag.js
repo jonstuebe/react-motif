@@ -9,7 +9,7 @@ export default styled.div`
   background-color: ${colors.lightBlue};
   color: ${colors.darkBlue};
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
-  padding: 5px;
+  padding: 5px 8px;
 `;

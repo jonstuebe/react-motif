@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { get } from "lodash";
 import { getColors } from "../theme";
 import { lighten, darken, transparentize } from "polished";
 
@@ -9,7 +8,7 @@ const Button = styled.button`
   }};
   border: 1px solid transparent;
   box-shadow: 0 2px 4px 0 ${props => {
-    return transparentize(".83", darken(0.1, getColors(props).background));
+    return transparentize(0.83, darken(0.1, getColors(props).background));
   }};
   border-radius: 3px;
   transition: all 250ms ease-in-out;
@@ -34,7 +33,7 @@ const Button = styled.button`
       return transparentize(0.21, darken(0.05, getColors(props).background));
     }};
     box-shadow: 0 2px 4px 0 ${props => {
-      return transparentize(".6", darken(0.15, getColors(props).background));
+      return transparentize(0.6, darken(0.15, getColors(props).background));
     }};
     background-color: ${props => {
       return lighten(0.03, getColors(props).background);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { space } from 'styled-system';
 import { colors, getColors } from "../theme";
 import { lighten, darken, transparentize } from "polished";
 
@@ -71,11 +72,13 @@ const Label = styled.span`
   line-height: 24px;
   -webkit-font-smoothing: antialiased;
   user-select: none;
+  ${space};
 `;
 
 export default class Switch extends Component {
   static propTypes = {
     onChange: PropTypes.func,
+    leftLabel: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.bool,
     defaultValue: PropTypes.bool
@@ -103,6 +106,7 @@ export default class Switch extends Component {
   render() {
     return (
       <Container>
+        {this.props.leftLabel && <Label mr={5}>{this.props.leftLabel}</Label>}
         <Checkbox onChange={this.onChange} checked={this.getValue()} />
         <Slider />
         {this.props.label && <Label>{this.props.label}</Label>}

@@ -88,7 +88,7 @@ export default class Checkbox extends Component {
   };
   render() {
     return (
-      <Container>
+      <Container style={this.props.style} className={this.props.className}>
         <Input
           type="checkbox"
           onChange={this.onChange}

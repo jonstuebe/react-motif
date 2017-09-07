@@ -1,4 +1,5 @@
 import React from "react";
+import * as V from "victory";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -10,18 +11,21 @@ import { ThemeProvider } from "../theme";
 
 import "../index.css";
 
+import faker from "faker";
+
 import Button from "../components/Button";
 import Switch from "../components/Switch";
 import Checkbox from "../components/Checkbox";
+
 import AppBar from "../components/AppBar";
+
 import Menu from "../components/Menu";
 import MenuItem from "../components/MenuItem";
 import MenuItemLink from "../components/MenuItemLink";
-import StatusTag from "../components/StatusTag";
-import DataList from "../components/DataList";
-import DataListRow from "../components/DataListRow";
-import DataListColumn from "../components/DataListColumn";
-import DataListCell from "../components/DataListCell";
+
+import Tag from "../components/Tag";
+
+import { Table, Column, Cell } from "../components/Table";
 
 import Chevron from "../icons/Chevron";
 
@@ -41,16 +45,16 @@ storiesOf("AppBar", module)
         }
       />
     </StoryContainer>
-  ));
+  );
 
 storiesOf("MenuItem", module)
-  .add("default", () => (
+  .add("default", () =>
     <MenuItem
       title="Investments"
       description="Lists, reports, and information pertaining to disposition"
     />
-  ))
-  .add("folder", () => (
+  )
+  .add("folder", () =>
     <Router>
       <Menu>
         <MenuItem
@@ -75,27 +79,27 @@ storiesOf("MenuItem", module)
         </MenuItem>
       </Menu>
     </Router>
-  ))
-  .add("folder (active)", () => (
+  )
+  .add("folder (active)", () =>
     <MenuItem
       title="Investments"
       description="Lists, reports, and information pertaining to disposition"
       folder
       active
     />
-  ));
+  );
 
 storiesOf("Button", module)
-  .add("default", () => (
+  .add("default", () =>
     <ThemeProvider>
       <Button onClick={action("clicked")}>Hello Button</Button>
     </ThemeProvider>
-  ))
-  .add("primary", () => (
+  )
+  .add("primary", () =>
     <ThemeProvider>
       <Button onClick={action("clicked")} primary>Hello Button</Button>
     </ThemeProvider>
-  ));
+  );
 
 storiesOf("Switch", module)
   .add("uncontrolled", () => <Switch onChange={action("changed")} />)
@@ -104,55 +108,67 @@ storiesOf("Switch", module)
   ))
   .add("uncontrolled w/ label", () => (
     <Switch onChange={action("changed")} label="Autosave" />
-  ))
-  .add("default on", () => (
+  )
+  .add("default on", () =>
     <Switch onChange={action("changed")} defaultValue={true} />
-  ));
+  );
 
 storiesOf("Checkbox", module)
   .add("uncontrolled", () => <Checkbox onChange={action("changed")} />)
-  .add("uncontrolled w/ label", () => (
+  .add("uncontrolled w/ label", () =>
     <Checkbox onChange={action("changed")} label="Select All" />
-  ))
-  .add("default on", () => (
+  )
+  .add("default on", () =>
     <Checkbox onChange={action("changed")} defaultValue={true} />
-  ));
+  );
 
-storiesOf("StatusTag", module).add("default", () => (
-  <StatusTag>Vacant Unrented Ready</StatusTag>
-));
+storiesOf("Tag", module).add("default", () => <Tag>Vacant Unrented Ready</Tag>);
 
-storiesOf("DataListRow", module).add("basic", () => (
-  <DataList>
-    <DataListRow>
-      <DataListColumn><Checkbox /></DataListColumn>
-      <DataListColumn>Property ID</DataListColumn>
-      <DataListColumn>Street Address</DataListColumn>
-      <DataListColumn>City</DataListColumn>
-      <DataListColumn>State</DataListColumn>
-      <DataListColumn>ZIP</DataListColumn>
-      <DataListColumn>Status</DataListColumn>
-      <DataListColumn>Rent</DataListColumn>
-    </DataListRow>
-    <DataListRow>
-      <DataListCell><Checkbox /></DataListCell>
-      <DataListCell>59878</DataListCell>
-      <DataListCell>2468 W Templeton Ave</DataListCell>
-      <DataListCell>Phoenix</DataListCell>
-      <DataListCell>AZ</DataListCell>
-      <DataListCell>85281</DataListCell>
-      <DataListCell><StatusTag>Vacant Unrented Ready</StatusTag></DataListCell>
-      <DataListCell>$1,350</DataListCell>
-    </DataListRow>
-  </DataList>
-));
+storiesOf("Table", module).add("basic", () => {
+  let list = [];
+  const statuses = [
+    "Vacant Unrented Not Ready",
+    "Notice Unrented Not Ready",
+    "Notice Unrented Ready"
+  ];
+  for (var i = 0; i < 15; i++) {
+    list.push({
+      propertyId: faker.random.number(),
+      streetAddress: faker.address.streetAddress(),
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode(),
+      status: statuses[Math.floor(Math.random() * statuses.length)]
+    });
+  }
+
+  return (
+    <Table data={list} striped hover>
+      <Column dataKey="propertyId" width={115}>Property ID</Column>
+      <Column dataKey="streetAddress" width={225}>Street Address</Column>
+      <Column dataKey="city" width={135}>City</Column>
+      <Column dataKey="state" width={55}>State</Column>
+      <Column dataKey="zip" width={100}>Zip</Column>
+      <Column
+        dataKey="status"
+        width={225}
+        cellRenderer={({ label, value }) =>
+          <Cell>
+            <span className="mobile-label">{label}</span><Tag>{value}</Tag>
+          </Cell>}
+      >
+        Status
+      </Column>
+    </Table>
+  );
+});
 
 storiesOf("Icons", module)
   .add("chevron right small", () => <Chevron direction="right" />)
   .add("chevron left small", () => <Chevron direction="left" />)
-  .add("chevron right medium", () => (
+  .add("chevron right medium", () =>
     <Chevron direction="right" size="medium" />
-  ))
+  )
   .add("chevron left medium", () => <Chevron direction="left" size="medium" />)
   .add("chevron right large", () => <Chevron direction="right" size="large" />)
   .add("chevron left large", () => <Chevron direction="left" size="large" />);

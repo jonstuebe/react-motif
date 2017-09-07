@@ -50,8 +50,8 @@ const SvgWrapper = styled.div`
   }
 `;
 
-export default ({ direction, size = "small", color }) =>
-  <SvgWrapper size={size} width={7} height={11.9} color={color}>
+export default ({ direction, size = "small", color, style }) =>
+  <SvgWrapper size={size} width={7} height={11.9} color={color} style={style}>
     {direction === "right" &&
       <svg
         xmlns="http://www.w3.org/2000/svg"

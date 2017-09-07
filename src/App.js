@@ -7,8 +7,11 @@ import Menu from "./components/Menu";
 import MenuItemLink from "./components/MenuItemLink";
 import MenuItem from "./components/MenuItem";
 
+import { ThemeProvider } from "./theme";
+
 import FillHeight from "./helpers/FillHeight";
 
+import InvestmentsList from "./containers/InvestmentsList";
 import PropertiesContainer from "./containers/PropertiesContainer";
 
 class App extends Component {
@@ -32,33 +35,47 @@ class App extends Component {
                       description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
                     >
                       <MenuItemLink
-                        title="List View"
+                        title="Properties Dashboard"
                         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                        to="/investments/list"
+                        to="/properties/dashboard"
                       />
-                      <MenuItemLink
-                        title="Reports"
+                      <MenuItem
+                        title="Investments"
                         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-                        to="/investments/reports"
+                      >
+                        <MenuItemLink
+                          title="List View"
+                          description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                          to="/investments/list"
+                        />
+                        <MenuItemLink
+                          title="Reports"
+                          description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                          to="/investments/reports"
+                        />
+                      </MenuItem>
+                    </Menu>
+                  </Left>
+                  <Center>
+                    <Switch>
+                      <Route
+                        path="/investments/list"
+                        component={InvestmentsList}
                       />
-                    </MenuItem>
-                  </Menu>
-                </Left>
-                <Center>
-                  <Switch>
-                    <Route
-                      path="/investments/:page"
-                      component={PropertiesContainer}
-                    />
-                    <Route
-                      path="/properties/:page"
-                      component={PropertiesContainer}
-                    />
-                  </Switch>
-                </Center>
-              </Container>
-            </FillHeight>}
-        </AppLayout>
+                      <Route
+                        path="/investments/:page"
+                        component={PropertiesContainer}
+                      />
+                      <Route
+                        path="/properties/:page"
+                        component={PropertiesContainer}
+                      />
+                    </Switch>
+                  </Center>
+                </Container>
+              </FillHeight>}
+          </AppLayout>
+        </ThemeProvider>
       </Router>
     );
   }

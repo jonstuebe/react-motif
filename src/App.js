@@ -18,14 +18,22 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <ThemeProvider>
-          <AppLayout>
-            {({ Container, Left, Center, Right }) =>
-              <FillHeight>
-                <AppBar left="atlas" />
-                <Container>
-                  <Left>
-                    <Menu>
+        <AppLayout>
+          {({ Container, Left, Center, Right }) =>
+            <FillHeight>
+              <AppBar left="App" />
+              <Container>
+                <Left>
+                  <Menu>
+                    <MenuItemLink
+                      title="Properties Dashboard"
+                      description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                      to="/properties/dashboard"
+                    />
+                    <MenuItem
+                      title="Investments"
+                      description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+                    >
                       <MenuItemLink
                         title="Properties Dashboard"
                         description="Lorem ipsum dolor sit amet, consectetur adipisicing elit."

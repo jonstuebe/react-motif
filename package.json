@@ -18,8 +18,9 @@
     "react-table": "^6.4.0",
     "react-useragent": "^0.4.4",
     "react-virtualized": "^9.7.6",
+    "victory": "^0.21.0",
     "styled-components": "^2.0.0",
-    "victory": "^0.21.0"
+    "styled-system": "^1.0.0-13"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -28,11 +28,11 @@ import Chevron from "../icons/Chevron";
 import ProfilePhoto from "../components/ProfilePhoto";
 
 storiesOf("AppBar", module)
-  .add("default", () => <AppBar left={"atlas"} />)
+  .add("default", () => <AppBar left={"App"} />)
   .add("w/ right", () => (
     <StoryContainer>
       <AppBar
-        left={"atlas"}
+        left={"App"}
         right={
           <ProfilePhoto
             image="https://www.gravatar.com/avatar/ca43155a79bd234200f52ea50193c4b6?s=200"
@@ -99,6 +99,9 @@ storiesOf("Button", module)
 
 storiesOf("Switch", module)
   .add("uncontrolled", () => <Switch onChange={action("changed")} />)
+  .add("uncontrolled w/ both labels", () => (
+    <Switch onChange={action("changed")} label="Public" leftLabel="Private" />
+  ))
   .add("uncontrolled w/ label", () => (
     <Switch onChange={action("changed")} label="Autosave" />
   ))

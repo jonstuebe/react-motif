@@ -18,7 +18,7 @@ class App extends Component {
         <AppLayout>
           {({ Container, Left, Center, Right }) =>
             <FillHeight>
-              <AppBar left="atlas" />
+              <AppBar left="App" />
               <Container>
                 <Left>
                   <Menu>

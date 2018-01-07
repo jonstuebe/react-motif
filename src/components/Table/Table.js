@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors, fonts } from "../../theme";
 import { isEqual, each, reduce } from "lodash";
-import { WindowScroller, List } from "react-virtualized";
-import "react-virtualized/styles.css";
 
 import Cell from "./Cell";
 import Column from "./Column";
@@ -77,9 +75,13 @@ export default class Table extends Component {
           ? children
           : Object.values(this.props.data[index]).map((value, cellIndex) => {
               const column = this.state.columns[cellIndex];
-              const CellComponent = column && column.cellRenderer
-                ? column.cellRenderer.bind(null, { label: column.label, value })
-                : Cell;
+              const CellComponent =
+                column && column.cellRenderer
+                  ? column.cellRenderer.bind(null, {
+                      label: column.label,
+                      value
+                    })
+                  : Cell;
               return (
                 <CellComponent key={cellIndex} width={columnWidths[cellIndex]}>
                   <span className="mobile-label">{column.label}</span> {value}

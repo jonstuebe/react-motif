@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { Table as DumbTable, Column, Cell } from "../components/Table";
+import { Table, Column, Cell } from "../components/Table";
 import Tag from "../components/Tag";
 
 import Pagination from "../components/Pagination";
@@ -43,15 +43,15 @@ export default class Table extends Component {
     const { data, totalNum, pagination } = this.props;
     return (
       <div>
-        {pagination &&
-          <Pagination totalNum={totalNum} numResults={data.length} />}
+        {pagination && (
+          <Pagination totalNum={totalNum} numResults={data.length} />
+        )}
         <TableContainer>
-          <DumbTable data={data}>
-            {this.renderColumns()}
-          </DumbTable>
+          <Table data={data}>{this.renderColumns()}</Table>
         </TableContainer>
-        {pagination &&
-          <Pagination totalNum={totalNum} numResults={data.length} />}
+        {pagination && (
+          <Pagination totalNum={totalNum} numResults={data.length} />
+        )}
       </div>
     );
   }
